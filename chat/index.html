@@ -1,0 +1,97 @@
+<!--<html>
+<head>
+
+<style>
+#chat-container {
+	border: solid 1px black;
+	background: white;
+}
+#chat-title {
+	border-bottom: solid 1px black;
+	background: lightgrey;
+	width: auto;
+
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#chat-content {
+	padding-left: 10px;
+}
+</style>
+
+
+</head>
+<body>
+
+
+	<h1>Web Socket Test</h1>
+	<div id="chat-container">
+		<div id="chat-title">Chat</div>
+		<div id="chat-content">
+			<p>example chat line, but what if it goes over length?</p>
+		</div>
+	</div>
+
+	<p>WebSocket status: <label id="socket-status">NOT CONNECTED</label><p>
+
+
+<script>
+	var websocket = new WebSocket("wss://echo.websocket.org");
+
+	var CONNECTED = 1, NOT_CONNECTED = 2;
+
+	websocket.onopen = function(event) {
+		console.log('Connected to websocket');
+
+   		var connectionStatus = document.getElementById("socket-status");
+		connectionStatus.innerHTML = 'CONNECTED';
+
+		websocket.send('hello');
+	}
+
+	websocket.onclose = function(event) {
+   		console.log("Disconnected from websocket");
+	
+   		// Inform the user about the error.
+   		var status = document.getElementById("socket-status");
+   		status.innerHTML = "Error: " + event;
+	}
+
+	websocket.onmessage = function(event) {
+		var chat = document.getElementById('chat-content');
+		var htmlToInsert = `<p>${event.data}</p>`;
+		chat.insertAdjacentHTML('beforeend', htmlToInsert);
+	}
+
+</script>
+
+</body>
+-->
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>WebSockets - Simple chat</title>
+    <style>
+    * { font-family:tahoma; font-size:12px; padding:0px;margin:0px;}
+    p { line-height:18px; }
+    div { width:500px; margin-left:auto; margin-right:auto;}
+    #content { padding:5px; background:#ddd; border-radius:5px;
+        overflow-y: scroll; border:1px solid #CCC;
+        margin-top:10px; height: 160px; }
+    #input { border-radius:2px; border:1px solid #ccc;
+        margin-top:10px; padding:5px; width:400px;
+    }
+    #status { width:88px;display:block;float:left;margin-top:15px; }
+  </style>
+  </head>
+  <body>
+    <div id="content"></div>
+    <div>
+      <span id="status">Connecting...</span>
+      <input type="text" id="input" disabled="disabled" />
+    </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
